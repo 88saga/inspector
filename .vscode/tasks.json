@@ -1,0 +1,55 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Docker: Build image",
+      "type": "shell",
+      "command": "docker build -t mcp-inspector:local .",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "detail": "Build the Docker image for the MCP Inspector repository"
+    },
+    {
+      "label": "Docker: Run container",
+      "type": "shell",
+      "command": "docker run --rm --name mcp-inspector -e HOST=0.0.0.0 -e MCP_AUTO_OPEN_ENABLED=false -p 6274:6274 -p 6277:6277 mcp-inspector:local",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "detail": "Run the MCP Inspector container exposing ports 6274 (client) and 6277 (server)"
+    },
+    {
+      "label": "Docker: Build and Run",
+      "dependsOn": [
+        "Docker: Build image",
+        "Docker: Run container"
+      ],
+      "dependsOrder": "sequence",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "detail": "Build the Docker image and then run the container"
+    }
+  ]
+}
+
